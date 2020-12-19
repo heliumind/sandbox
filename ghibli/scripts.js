@@ -9,36 +9,41 @@ container.setAttribute('class', 'container');
 app.appendChild(logo);
 app.appendChild(container);
 
-// Replace ./data.json with your JSON feed
-fetch('https://ghibliapi.herokuapp.com/films')
-  .then((response) => {
-    return response.json();
-  })
-  .then((data) => {
-    // Work with JSON data here
-    data.forEach((movie) => {
-      // Create a div with a card class
-      const card = document.createElement('div');
-      card.setAttribute('class', 'card');
+function createCard(film) {
+  // Create a div with a card class
+  const card = document.createElement('div');
+  card.setAttribute('class', 'card');
 
-      // Create an h1 and set the text content to the film's title
-      const h1 = document.createElement('h1');
-      h1.textContent = movie.title;
+  // Create an h1 and set the text content to the film's title
+  const h1 = document.createElement('h1');
+  h1.textContent = film.title;
 
-      // Create a p and set the text content to the film's description
-      const p = document.createElement('p');
-      movie.description = movie.description.substring(0, 300) // Limit to 300
-      p.textContent = `${movie.description}...` // End with an ellipses
+  // Create a p and set the text content to the film's description
+  const p = document.createElement('p');
+  film.description = film.description.substring(0, 300) // Limit to 300
+  p.textContent = `${film.description}...` // End with an ellipses
 
-      // Append the cards to the container element
-      container.appendChild(card);
+  // Append the cards to the container element
+  container.appendChild(card);
 
-      // Each card will contain an h1 and a p
-      card.appendChild(h1);
-      card.appendChild(p);
-    })
-  })
-  .catch((err) => {
-    // Do something for an error here
-    console.error(err);
-  })
+  // Each card will contain an h1 and a p
+  card.appendChild(h1);
+  card.appendChild(p); 
+}
+
+async function getFilms(url) {
+  try {
+    const response = await fetch(url);
+    const films = await response.json();
+    films.forEach(film => {
+      createCard(film);
+    });
+  } catch (error) {
+    // Handle error in catch
+    console.log(error);
+  }
+}
+
+// Consume Ghibli API
+const url = 'https://ghibliapi.herokuapp.com/films'; 
+getFilms(url);
