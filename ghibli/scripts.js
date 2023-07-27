@@ -45,5 +45,5 @@ async function getFilms(url) {
 }
 
 // Consume Ghibli API
-const url = 'https://ghibliapi.herokuapp.com/films'; 
+const url = 'https://ghibliapi.vercel.app/films'; 
 getFilms(url);
