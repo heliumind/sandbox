@@ -1,0 +1,8 @@
+{
+  "extends": "../tsconfig.base",
+  "compilerOptions": {
+    "removeComments": true,
+    "module": "commonjs"
+  },
+  "files": ["./app.ts", "utility.ts"]
+}
